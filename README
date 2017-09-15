@@ -1,0 +1,2 @@
+A simple utility to convert exr images to png while preserving the exposure and gamma values.
+To use the script, just use -h to figure out the options.
