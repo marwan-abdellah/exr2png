@@ -66,6 +66,11 @@ def convert_exr_image_to_png(input_image, output_directory):
 # @main
 ####################################################################################################
 def main():
+    """
+    Main function.
+    
+    :rtype : None
+    """
     
     # parse the arguments 
     args = parse_command_line_arguments()
@@ -74,5 +79,5 @@ def main():
     convert_exr_image_to_png(args.input_image, args.output_directory)
 
 if __name__ == '__main__':
-  main()
+    main()
 
