@@ -29,6 +29,9 @@ def parse_command_line_arguments(arguments=None):
     parser.add_argument('--output-directory', default=os.getcwd(),  dest='output_directory', 
                         action='store', help=arg_help)
                         
+    arg_help = 'gamma value for the exr conversion, default 1.5 (based on trial and error)'
+    parser.add_argument('--gamma', dest='gamma', default = 1.5, action='store', help=arg_help)
+                        
     # parse the arguments, and return a list of them
     arguments = parser.parse_args()
     
@@ -38,12 +41,13 @@ def parse_command_line_arguments(arguments=None):
 ####################################################################################################
 # @convert_exr_image_to_png
 ####################################################################################################
-def convert_exr_image_to_png(input_image, output_directory):
+def convert_exr_image_to_png(input_image, output_directory, gamma):
     """
     Convert a given exr image into a PNG image and save the output image to the output dirctory.
     
     :param input_image      : Absolute path to the input exr image
     :param output_directory : The output directory where the PNG image will be created 
+    :param gamma            : The gamma value for the exr image 
     :rtype                  : None
     """
     
@@ -57,7 +61,8 @@ def convert_exr_image_to_png(input_image, output_directory):
     output_image = '%s/%s' % (output_directory, output_png_image_name) 
     
     # run the conversion command 
-    shell_command = 'convert %s %s' % (input_image, output_image)
+    conversion_args = '-gamma %s -channel ALL -normalize -quality 100' % (gamma)
+    shell_command = 'convert %s %s %s ' % (input_image, conversion_args, output_image)
     print('CONVERTING: ' + shell_command)
     subprocess.call(shell_command, shell=True)
     
@@ -76,7 +81,7 @@ def main():
     args = parse_command_line_arguments()
 
     # convert the EXR image to a PNG one 
-    convert_exr_image_to_png(args.input_image, args.output_directory)
+    convert_exr_image_to_png(args.input_image, args.output_directory, args.gamma)
 
 if __name__ == '__main__':
     main()
