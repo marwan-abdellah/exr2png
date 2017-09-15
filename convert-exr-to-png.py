@@ -26,7 +26,8 @@ def parse_command_line_arguments(arguments=None):
     parser.add_argument('--input-directory', dest='input_directory', action='store', help=arg_help)
     
     arg_help = 'output directory, where the images will be generated'
-    parser.add_argument('--output-directory', default=os.getcwd(),  dest='output_directory', action='store', help=arg_help)
+    parser.add_argument('--output-directory', default=os.getcwd(),  dest='output_directory', 
+                        action='store', help=arg_help)
                         
     # parse the arguments, and return a list of them
     arguments = parser.parse_args()
@@ -60,13 +61,18 @@ def convert_exr_image_to_png(input_image, output_directory):
     print('CONVERTING: ' + shell_command)
     subprocess.call(shell_command, shell=True)
     
-# run the main function
 
-# parse the arguments 
-args = parse_command_line_arguments()
+####################################################################################################
+# @main
+####################################################################################################
+def main():
+    
+    # parse the arguments 
+    args = parse_command_line_arguments()
 
-# convert the image 
-convert_exr_image_to_png(args.input_image, args.output_directory)
+    # convert the EXR image to a PNG one 
+    convert_exr_image_to_png(args.input_image, args.output_directory)
 
-
+if __name__ == '__main__':
+  main()
 
